@@ -17,7 +17,6 @@ const ExpensesOverview = () => {
   return (
     <BottomTab.Navigator
       screenOptions={({ navigation }) => ({
-        // میتوانیم در ست اپشن نیز نویگیشن را دریافت کنیم البته در صورتی که به اینگونه ست اپشن را به صورت فانکشنی بنویسیم و در پراپس ها این نویگیشن را دریافت کنیم و از ان استفاده کنیم
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
@@ -87,7 +86,6 @@ export default function App() {
             options={{
               title: "Manage Expense",
               presentation: "modal",
-              // این پرسنتیشن حالت باز و بسته شدن کامپوننت هنگام نویگیت کردن در نیتیو استک را نشان میدهد
             }}
           />
         </Stack.Navigator>
