@@ -1,15 +1,14 @@
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/Styles";
 import Button from "../components/UI/Button";
+import { ExpensesContext } from "../store/expense-context";
 
 const ManageExpense = ({ route, navigation }) => {
+  const expensesCtx = useContext(ExpensesContext);
   const editedExpenseId = route.params?.expenseId;
-  // علامت تعجب را به این خاطر گزاشتیم که اگر اکسپنس ایدی هنوز ساخته نشده باشد یعنی اندفایند باشد پس به این خاطر  پارامس به بعد را نگاه نکند و به ما خطا ندهد اگرم که اندفایند نبود انرا به کانست بریزد
   const isEditing = !!editedExpenseId;
-  // دو تا علامت تعجب داده مورد نظر را به بولین تبدیل میکند
-
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense",
@@ -17,13 +16,26 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
+    expensesCtx.deleteExpenses(editedExpenseId);
     navigation.goBack();
-    // این کد با عث میشود به صفحه قبلی برگردیم یا در واقع این کامپوننت بسته شود
   };
   const cancelHandler = () => {
     navigation.goBack();
   };
   const confirmHandler = () => {
+    if (isEditing) {
+      expensesCtx.updateExpenses(editedExpenseId, {
+        description: "test!!!",
+        amount: 29.99,
+        date: new Date("2023-02-29"),
+      });
+    } else {
+      expensesCtx.addExpenses({
+        description: "test....",
+        amount: 19.99,
+        date: new Date("2024-05-19"),
+      });
+    }
     navigation.goBack();
   };
   return (
