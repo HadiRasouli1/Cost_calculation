@@ -10,6 +10,11 @@ const ManageExpense = ({ route, navigation }) => {
   const expensesCtx = useContext(ExpensesContext);
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
+
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense",
@@ -23,19 +28,11 @@ const ManageExpense = ({ route, navigation }) => {
   const cancelHandler = () => {
     navigation.goBack();
   };
-  const confirmHandler = () => {
+  const confirmHandler = (expenseData) => {
     if (isEditing) {
-      expensesCtx.updateExpenses(editedExpenseId, {
-        description: "test!!!",
-        amount: 29.99,
-        date: new Date("2023-02-29"),
-      });
+      expensesCtx.updateExpenses(editedExpenseId, expenseData);
     } else {
-      expensesCtx.addExpenses({
-        description: "test....",
-        amount: 19.99,
-        date: new Date("2024-05-19"),
-      });
+      expensesCtx.addExpenses(expenseData);
     }
     navigation.goBack();
   };
@@ -44,8 +41,9 @@ const ManageExpense = ({ route, navigation }) => {
       <ExpenseForm
         onCancel={cancelHandler}
         submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        defaultValues={selectedExpense}
       />
-
       {isEditing && (
         <View style={styles.deletContainer}>
           <IconButton

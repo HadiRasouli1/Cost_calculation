@@ -1,16 +1,21 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { GlobalStyles } from "../../constants/Styles";
 
-const Input = ({ label, styleInput, textInputConfig }) => {
+const Input = ({ inValid, label, styleInput, textInputConfig }) => {
   const inputStyles = [styles.input];
   if (textInputConfig && textInputConfig.multiline) {
     inputStyles.push(styles.inputMultiLine);
   }
+  if (inValid) {
+    inputStyles.push(styles.invalidInput);
+  }
 
   return (
     <View style={[styles.inputContainer, styleInput]}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput style={inputStyles} {...textInputConfig}/>
+      <Text style={[styles.label, inValid && styles.invalidLabel]}>
+        {label}
+      </Text>
+      <TextInput style={inputStyles} {...textInputConfig} />
     </View>
   );
 };
@@ -36,6 +41,11 @@ const styles = StyleSheet.create({
   inputMultiLine: {
     minHeight: 100,
     textAlignVertical: "top",
-    // برای اینکه اینپوت مولتی لاین ئر هر دو پلتفرم به درستی دیده شود و تکست در بالا به درستی نوشته شود تکست الاین ورتیکال رو در تاپ قرار میدهیم
+  },
+  invalidLabel: {
+    color: GlobalStyles.colors.error500,
+  },
+  invalidInput: {
+    backgroundColor: GlobalStyles.colors.error50,
   },
 });
