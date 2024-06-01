@@ -1,11 +1,12 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { GlobalStyles } from "../../constants/Styles";
+import Button from "./Button";
 
-const LoadingOverlay = () => {
+const LoadingOverlay = ({closeLoaded}) => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="white" />
-      {/* این کامپوننت به ما یک لودر میدهد میتوانیم رنگ و سایزش را خودکان انخاب کنیم */}
+      <Button onPressFunc={closeLoaded}>dont loaded</Button>
     </View>
   );
 };
@@ -18,5 +19,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary700,
+    gap:10
   },
 });

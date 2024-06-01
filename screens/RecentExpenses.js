@@ -12,21 +12,22 @@ const RecentExpenses = () => {
 
   const [isFetching, setIsFetching] = useState(true);
 
-  const [fetchedExpenses, setFetchedExpenses] = useState();
+  // const [fetchedExpenses, setFetchedExpenses] = useState();
 
-  useEffect(() => {
-    const getExpenses = async () => {
-      const expenses = await fetchExpenses();
-      setFetchedExpenses(expenses);
-    };
+  // useEffect(() => {
+  //   const getExpenses = async () => {
+  //     const expenses = await fetchExpenses();
+  //     setFetchedExpenses(expenses);
+  //   };
 
-    getExpenses();
-  }, []);
+  //   getExpenses();
+  // }, []);
 
-  const CloseErrorComp = () => {};
-
+  const closeLoaded = () => {
+    setIsFetching(false);
+  };
   if (isFetching) {
-    return <LoadingOverlay />;
+    return <LoadingOverlay closeLoaded={closeLoaded} />;
   }
 
   const recentExpenses = expensesCtx.expenses.filter((expense) => {
